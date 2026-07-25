@@ -8,7 +8,7 @@
 let
   buildPlatform = stdenv.buildPlatform;
   hostPlatform = stdenv.hostPlatform;
-  pythonEnv = buildPackages.python3.withPackages (
+  pythonEnv = buildPackages.python313.withPackages (
     ps: with ps; [
       distutils
       numpy
