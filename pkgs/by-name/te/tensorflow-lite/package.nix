@@ -39,7 +39,7 @@ buildBazelPackage rec {
     owner = "tensorflow";
     repo = "tensorflow";
     rev = "v${version}";
-    hash = "sha256-Rq5pAVmxlWBVnph20fkAwbfy+iuBNlfFy14poDPd5h0=";
+    hash = "sha256-xq5pAVmxlWBVnph20fkAwbfy+iuBNlfFy14poDPd5h0=";
   };
 
   bazel = buildPackages.bazel;
