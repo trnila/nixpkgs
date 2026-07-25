@@ -88,6 +88,7 @@ buildBazelPackage rec {
   fetchAttrs.sha256 = bazelDepsSha256;
 
   env.PYTHON_BIN_PATH = pythonEnv.interpreter;
+  env.TF_NEED_CLANG=0;
 
   dontAddBazelOpts = true;
   removeRulesCC = false;
