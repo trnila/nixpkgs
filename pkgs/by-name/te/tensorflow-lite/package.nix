@@ -89,6 +89,7 @@ buildBazelPackage rec {
 
   env.PYTHON_BIN_PATH = pythonEnv.interpreter;
   env.TF_NEED_CLANG=0;
+  env.HERMETIC_PYTHON_VERSION = "3.13";
 
   dontAddBazelOpts = true;
   removeRulesCC = false;
