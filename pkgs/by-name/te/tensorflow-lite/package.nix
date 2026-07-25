@@ -33,7 +33,7 @@ let
 in
 buildBazelPackage rec {
   name = "tensorflow-lite";
-  version = "2.13.0";
+  version = "2.21.0";
 
   src = fetchFromGitHub {
     owner = "tensorflow";
@@ -42,8 +42,7 @@ buildBazelPackage rec {
     hash = "sha256-Rq5pAVmxlWBVnph20fkAwbfy+iuBNlfFy14poDPd5h0=";
   };
 
-  bazel = buildPackages.bazel_5;
-  #bazel = buildPackages.bazel;
+  bazel = buildPackages.bazel;
 
   nativeBuildInputs = [
     pythonEnv
