@@ -6,6 +6,7 @@
   fetchFromGitHub,
   setuptools,
   numpy,
+  tensorflow-lite,
   pytestCheckHook,
 }:
 
@@ -22,8 +23,12 @@ buildPythonPackage rec {
   };
 
   postPatch = ''
-    # install pre-compiled libtensorflowlite
-    python ./script/copy_lib
+    # remove pre-compiled libtensorflowlite
+    rm -r ./lib
+
+    # replace path to tensorflow-lite from nix
+    substituteInPlace pyopen_wakeword/openwakeword.py \
+      --replace-fail "_MODULE_LIB_DIR = _DIR / \"lib\"" "_MODULE_LIB_DIR = Path(\"${tensorflow-lite}/lib\")"
   '';
 
   nativeBuildInputs = [
@@ -36,6 +41,7 @@ buildPythonPackage rec {
 
   dependencies = [
     numpy
+    tensorflow-lite
   ];
 
   nativeCheckInputs = [
@@ -47,18 +53,10 @@ buildPythonPackage rec {
   ];
 
   meta = {
-    broken =
-      # elftools.common.exceptions.ELFError: Magic number does not match
-      stdenv.hostPlatform.isDarwin
-      ||
-        # segfaults when calling into libtensorflowlite
-        stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isAarch64;
     description = "Alternative Python library for openWakeWord";
     homepage = "https://github.com/rhasspy/pyopen-wakeword";
     changelog = "https://github.com/rhasspy/pyopen-wakeword/blob/${src.tag}/CHANGELOG.md";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ hexa ];
-    # vendors prebuilt libtensorflowlite_c.{so,dll,dylib}
-    sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
   };
 }
